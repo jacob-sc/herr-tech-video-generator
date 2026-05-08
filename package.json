@@ -1,0 +1,45 @@
+{
+  "name": "video-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate deploy",
+    "remotion:studio": "remotion studio src/remotion/index.ts",
+    "remotion:render": "remotion render src/remotion/index.ts Herr-Tech-VideoCreator out/video.mp4"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "@fal-ai/client": "^1.9.5",
+    "@google/genai": "^1.47.0",
+    "@prisma/client": "^5.22.0",
+    "@remotion/cli": "^4.0.185",
+    "@remotion/player": "^4.0.185",
+    "fluent-ffmpeg": "^2.1.3",
+    "form-data": "^4.0.0",
+    "formidable": "^3.5.4",
+    "next": "^14.2.35",
+    "openai": "^4.52.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "remotion": "^4.0.185",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.24",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "^14.2.35",
+    "postcss": "^8",
+    "prisma": "^5.22.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

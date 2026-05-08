@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Standalone-Modus: keine Auth-Tabellen.
+// Die User-Tabelle existiert nur, damit die Statistik-Zähler funktionieren —
+// es gibt im Standalone-Setup nur einen einzigen "local-user".
+
+model User {
+  id    String @id @default("local-user")
+  email String @default("local@localhost")
+  name  String @default("Local User")
+  role  String @default("admin")
+
+  createdAt DateTime @default(now())
+
+  projectsCreated  Int @default(0)
+  imagesGenerated  Int @default(0)
+  videosGenerated  Int @default(0)
+}

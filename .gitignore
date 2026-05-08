@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build / Output
+.next/
+out/
+dist/
+build/
+
+# Generated content + uploads (lokal, niemals ins Repo)
+data/projects/
+data/generated/
+public/uploads/
+public/projects/
+uploads/
+tmp/
+transcripts/
+
+# Environment — never commit!
+.env
+.env.local
+.env.*.local
+!.env.local.example
+
+# macOS / Editor
+.DS_Store
+*.pem
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# TypeScript / Prisma
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel
