@@ -17,8 +17,9 @@ Lokale Pipeline: Video oder Prompt rein → Skript, Bilder, Untertitel, finales 
 - **Node.js 18+** — [nodejs.org](https://nodejs.org)
 - **FFmpeg** auf deinem Rechner installiert
 - **4 API-Keys** (Anthropic, OpenAI, Google AI, Fal.ai)
-- **PostgreSQL-Datenbank** (Neon Free Tier — kostenlos)
-- 60–90 Minuten Zeit fürs erste Setup
+- 30–60 Minuten Zeit fürs erste Setup
+
+> **Keine Datenbank nötig.** Alle Projekte, Skripte, Bilder und Videos werden direkt im lokalen Ordner `data/projects/` gespeichert.
 
 ## Kosten — ehrlich
 
@@ -36,7 +37,7 @@ Setz dir bei jedem Anbieter ein **monatliches Spend-Cap**. Veo3 ist die teuerste
 
 ---
 
-## Setup in 7 Schritten
+## Setup in 6 Schritten
 
 ### 1. Repo klonen
 
@@ -59,16 +60,7 @@ brew install ffmpeg
 
 Check: `ffmpeg -version`
 
-### 3. Datenbank anlegen (Neon Free Tier)
-
-1. Geh zu [neon.tech](https://neon.tech)
-2. Account anlegen mit GitHub oder Email
-3. **Create Project** → Name: `video-generator` → **Create**
-4. Im Dashboard: **Connection Details** → **Connection String** kopieren (sieht aus wie `postgresql://user:pass@host/db?sslmode=require`)
-
-Free-Tier reicht easy für Single-User-Local.
-
-### 4. Vier API-Keys holen
+### 3. Vier API-Keys holen
 
 #### a) Anthropic
 1. [console.anthropic.com](https://console.anthropic.com) → **Settings** → **API Keys** → **Create Key**
@@ -91,29 +83,27 @@ Free-Tier reicht easy für Single-User-Local.
 3. **Create API Key** → Key kopieren (sieht aus wie `xxxxxxxx:xxxxxxxxxx`)
 4. **Billing** → Karte hinterlegen + Spend-Cap $20/Monat
 
-### 5. Keys + DB-URL eintragen
+### 4. Keys eintragen
 
 Sag Claude einfach:
 
-> *„Hier sind meine Sachen:
+> *„Hier sind meine Keys:
 > - Anthropic: \[Key]
 > - OpenAI: \[Key]
 > - Google AI: \[Key]
-> - Fal.ai: \[Key]
-> - DATABASE_URL: \[Connection String von Neon]"*
+> - Fal.ai: \[Key]"*
 
 Claude trägt alles in `.env.local` ein — gitignored, bleibt auf deinem Rechner.
 
-### 6. Dependencies + Datenbank initialisieren
+### 5. Dependencies installieren
 
 ```bash
-npm install
-npx prisma db push
+npm install --legacy-peer-deps
 ```
 
-`prisma db push` legt die User-Tabelle in deiner Neon-DB an (das Tool braucht eine User-Row für Statistiken). Beim ersten Start wird der `local-user` automatisch angelegt.
+Dauert beim ersten Mal 2–3 Minuten (Anthropic SDK, OpenAI SDK, Fal-SDK, Remotion fürs Rendering, FFmpeg-Wrapper).
 
-### 7. Dev-Server starten
+### 6. Dev-Server starten
 
 ```bash
 npm run dev
@@ -162,9 +152,6 @@ Nano Banana ist gelegentlich überlastet. Tool retried automatisch + fällt auf 
 
 **Veo3-Aufruf zu teuer?**
 Du kannst in `src/lib/fal-video.js` den Default auf `kling-v3` setzen (~30% billiger, etwas geringere Qualität). Sag Claude: *„Default-Video-Modell auf Kling stellen."*
-
-**`prisma db push` schlägt fehl?**
-DATABASE_URL falsch oder Neon-DB pausiert. Neon-Dashboard prüfen — Free-Tier-DBs werden nach 5 Min Inaktivität pausiert, dauert 1–2 Sek beim ersten Request bis sie aufwacht.
 
 **Plattform blockiert Download (YouTube/TikTok)?**
 Kommt vor — die Plattformen detektieren manchmal Bots. Lösung: Video manuell mit [ytdown.to](https://app.ytdown.to/de23/) (YouTube) oder [cobalt.tools](https://cobalt.tools) runterladen, dann via **📁 Datei hochladen** rein.

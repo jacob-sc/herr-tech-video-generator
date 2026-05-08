@@ -2,8 +2,8 @@
  * Standalone-Stub: Im lokalen Single-User-Modus gibt es keine Auth.
  *
  * Diese Datei ersetzt die ursprüngliche NextAuth-basierte Auth-Logik.
- * Alle API-Routen, die `requireAuth`/`isAdmin` importieren, bekommen
- * automatisch den lokalen Default-User zurück.
+ * Alle API-Routen, die `requireAuth` importieren, bekommen automatisch
+ * `{ session, ownerId, user }` mit dem lokalen Default-User zurück.
  */
 
 const LOCAL_USER = {
@@ -11,16 +11,25 @@ const LOCAL_USER = {
   email: 'local@localhost',
   name: 'Local User',
   role: 'admin',
-}
+};
+
+const LOCAL_SESSION = {
+  user: LOCAL_USER,
+  expires: '2099-01-01T00:00:00.000Z',
+};
 
 export async function requireAuth(_req, _res) {
-  return LOCAL_USER
+  return {
+    session: LOCAL_SESSION,
+    ownerId: LOCAL_USER.id,
+    user: LOCAL_USER,
+  };
 }
 
-export async function isAdmin(_req) {
-  return true
+export function isAdmin(_session) {
+  return true;
 }
 
 export async function getCurrentUser(_req) {
-  return LOCAL_USER
+  return LOCAL_USER;
 }
