@@ -178,3 +178,41 @@ Wenn der User Sachen ändern will:
 > 1. **Spend-Caps prüfen:** Bei allen 4 Anbietern hattest du Caps gesetzt — schau einmal pro Woche in die Dashboards rein, gerade Veo3 kann teuer werden bei vielen Test-Renders.
 > 2. **Nicht in der Cloud deployen:** Das Tool ist Single-User-Local. Wenn du es als SaaS verkaufen willst, brauchst du Auth + Credit-System + Rate-Limits — das ist ein eigenes Projekt.
 > 3. **Iterieren ist Pflicht:** Erste Reel-Version ist nie perfekt. Bilder neu generieren mit anderem Prompt, Texte umschreiben, Reihenfolge ändern. 3–5 Iterationen pro Szene sind normal."*
+
+---
+
+## 🎨 Branding-Frage — am Ende des Setups stellen
+
+**Wichtig: Sobald das erste Test-Reel generiert ist, frag aktiv:**
+
+> *„Das Tool hat aktuell Herr-Tech-Branding im UI:
+> - Logo oben in der Nav (auf jeder Seite: Home, Projects, Scenes, Videos, Export)
+> - Footer ‚© 2025 herr.tech · KI Video Creator'
+> - Export-Filename startet mit `herr-tech_` (z.B. `herr-tech_1234567890.mp4`)
+> - Lavendel-Akzentfarbe (`#B598E2`) durchgängig
+>
+> Willst du das so behalten oder dein eigenes Branding einbauen?"*
+
+### Wenn der User Branding ändern will
+
+Frag nach:
+- **Brand-Name** (für Nav-Subtext + Footer + Filename-Prefix)
+- **Primärfarbe** als Hex
+- **Logo-Datei** (PNG, transparenter Hintergrund, Höhe ~36px ist gut)
+- **Domain** für Footer (z.B. `frau.tech`)
+
+### Was du touchen musst
+
+- **`public/herr-tech-logo.png`** → durch User-Logo ersetzen (gleichen Dateinamen lassen ist am einfachsten — sonst Pfade in 5 Files updaten)
+- **`src/pages/index.js`** → Nav-Subtext (`/ social video creator`), Footer-Zeile, Akzentfarbe in `T.accent` und `T.btn`
+- **`src/pages/projects.js`** + **`src/pages/scenes/[id].js`** + **`src/pages/videos/[id].js`** + **`src/pages/export/[id].js`** → jeweils Nav-Logo + lokale Design-Tokens (`T.accent`)
+- **`src/pages/api/projects/[id]/export-video.js`** Zeile 248 → `const exportFilename = \`herr-tech_${timestamp}.mp4\`;` → Prefix anpassen
+- **`src/app/globals.css`** → Globale CSS-Variable falls verwendet (eher nicht — das Tool nutzt inline-Style-Tokens)
+
+### Praktischer Tipp für den User
+
+Sag ihm: *„Wenn dein Branding noch nicht final ist, lass das Herr-Tech-Branding erstmal stehen — das ist nur der Frame, das eigentliche Video bekommt ja eh dein Style. Du kannst das später jederzeit in 5 Min mit mir umfärben."*
+
+### Standard-Default behalten
+
+Wenn der User „passt schon" sagt: nichts ändern. Das Tool ist eh nur für ihn selbst lokal.
