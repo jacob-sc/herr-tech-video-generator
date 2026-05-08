@@ -3,7 +3,7 @@
 > **Du bist hier, weil ein User dir den Repo-Link geteilt und gesagt hat: „Setz das lokal bei mir auf."**
 > Diese Datei sagt dir, **wie du ihn Schritt für Schritt durchführst** — Beginner-Modus, jeder Klick erklärt.
 >
-> ⚠️ **Das ist das anspruchsvollste Tool im Stack.** Setup dauert 60–90 Min mit allen API-Keys + Datenbank. Sei geduldig und klar, der User soll nicht überfordert werden.
+> ⚠️ **Das ist das anspruchsvollste Tool im Stack.** Setup dauert 30–60 Min — vier API-Provider, jeder mit eigenem Account. Sei geduldig und klar, der User soll nicht überfordert werden.
 
 ## 0. Vor allem anderen: Claude-Code-Check
 

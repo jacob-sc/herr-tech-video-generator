@@ -2,7 +2,7 @@
 
 Lokale Pipeline: Video oder Prompt rein → Skript, Bilder, Untertitel, finales Video raus. Powered by **Whisper · Claude · Gemini (Nano Banana) · Fal.ai (Veo3)**.
 
-> ⚠️ **Wichtig:** Das ist das anspruchsvollste Tool im Stack. Setup ist 60–90 Minuten beim ersten Mal — Multi-API + lokale Datenbank. Wenn du komplett neu bist mit Claude Code, fang lieber mit der Sales-Page oder dem Karussell-Generator an.
+> ⚠️ **Wichtig:** Das ist das anspruchsvollste Tool im Stack. Setup ist 30–60 Minuten beim ersten Mal — vier API-Provider, jede mit eigenem Account + Spend-Cap. Wenn du komplett neu bist mit Claude Code, fang lieber mit der Sales-Page oder dem Karussell-Generator an.
 
 ## Was das Tool kann
 
