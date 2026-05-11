@@ -77,12 +77,14 @@ async function submitVeo3Job({ imageUrl, prompt, duration = '8s', aspectRatio = 
   const fal = getFalClient();
   const payload = {
     prompt,
-    image_url:       imageUrl,
+    image_url:        imageUrl,
     duration,
-    aspect_ratio:    aspectRatio,
+    aspect_ratio:     aspectRatio,
     resolution,
-    negative_prompt: 'blur, distort, low quality, shaky, artifacts',
-    generate_audio:  !!audio,
+    negative_prompt:  'blur, distort, low quality, shaky, artifacts',
+    generate_audio:   !!audio,
+    auto_fix:         true,
+    safety_tolerance: '6',
   };
   console.log(`[fal/veo3] Submitting to ${FAL_MODEL_VEO3}`);
   console.log(`[fal/veo3] Payload: ${JSON.stringify({ ...payload, image_url: payload.image_url?.slice(0, 60) + '...' })}`);

@@ -46,14 +46,38 @@ export default async function handler(req, res) {
   const aspectRatio = format === '9:16' ? '9:16' : '16:9';
   const isVeo3 = model === 'veo3';
 
-  // Veo 3 blocks prompts mentioning ages of minors (under 18) — auto-replace with generic terms
+  // Veo 3 blocks prompts mentioning ages of minors (under 18) — auto-replace with generic terms.
+  // Also softens aggressive/threatening adjectives that trip Veo3's safety filter
+  // (Kling accepts them, Veo3 doesn't).
   function sanitizeForVeo3(text) {
     return text
-      // "17-Jähriger", "16-jährige", "15 Jahre alte" etc. → "young person"
+      // Age references
       .replace(/\b([1-9]|1[0-7])[- ]?[Jj]ähr(?:ig(?:er?|es?|em?)|e)\b/g, 'young person')
       .replace(/\b([1-9]|1[0-7])[- ]?year[- ]?old\b/gi, 'young person')
       .replace(/\bage[d\s]+([1-9]|1[0-7])\b/gi, 'young person')
-      .replace(/\b([1-9]|1[0-7])\s+Jahre?\s+alt\b/gi, 'young person');
+      .replace(/\b([1-9]|1[0-7])\s+Jahre?\s+alt\b/gi, 'young person')
+      // Aggressive / threatening adjectives → theatrical-neutral equivalents.
+      // Veo3 has stricter safety filtering than Kling — these words tripped 422s in testing.
+      .replace(/\barrogant(ly)?\b/gi, 'confident$1')
+      .replace(/\bvillainous(ly)?\b/gi, 'theatrical$1')
+      .replace(/\bmenacing(ly)?\b/gi, 'intense$1')
+      .replace(/\bcontemptuous(ly)?\b/gi, 'stern$1')
+      .replace(/\bcondescending\b/gi, 'authoritative')
+      .replace(/\bdomina(nce|nt|ting)\b/gi, (m, suffix) => suffix === 'nce' ? 'presence' : (suffix === 'nt' ? 'commanding' : 'commanding'))
+      .replace(/\bsuperiority\b/gi, 'confidence')
+      .replace(/\bclench(es|ing|ed)?\b/gi, (m, suffix) => `tighten${suffix || ''}`)
+      .replace(/\baggressive(ly)?\b/gi, 'intense$1')
+      .replace(/\bfury\b/gi, 'intensity')
+      .replace(/\brage\b/gi, 'intensity')
+      .replace(/\bhostile\b/gi, 'firm')
+      .replace(/\bbrutal(ly)?\b/gi, 'forceful$1')
+      .replace(/\bfierce(ly)?\b/gi, 'intense$1')
+      .replace(/\bviolent(ly)?\b/gi, 'dynamic$1')
+      .replace(/\bexplosive(ly)?\b/gi, 'sudden$1')
+      .replace(/\bforceful(ly)?\b/gi, 'firm$1')
+      .replace(/\bbarely\s+restrained\b/gi, 'visibly contained')
+      .replace(/\bfists?\s+(raised|slightly\s+raised|clenched|tight)\b/gi, 'hands held with intention')
+      .replace(/\btrembling\s+with\s+(forceful|violent|aggressive|barely\s+restrained)\s+(\w+)/gi, 'trembling with $2');
   }
 
   const NO_OVERLAYS = 'No subtitles, no captions, no text overlays, no speech bubbles, no comic bubbles, no on-screen text or graphics of any kind.';

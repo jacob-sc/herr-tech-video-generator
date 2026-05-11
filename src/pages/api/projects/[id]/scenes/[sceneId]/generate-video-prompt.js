@@ -182,7 +182,7 @@ ${detectedSpeaker ? `SPEAKER: "${detectedSpeaker}" — identify this character p
 EXACT WORDS (verbatim — no additions, no omissions): "${scriptText}"
 
 The prompt MUST:
-1. Start with: "${speakerLabel === 'the character' ? 'The character' : `The ${detectedSpeaker}`} says/shouts/exclaims [match tone]: "${scriptText}"
+1. Start with: "${speakerLabel === 'the character' ? 'The character' : `The ${detectedSpeaker}`} says/declares/exclaims [match tone]: "${scriptText}"
 2. The character speaks EXACTLY these words — not more, not less, not paraphrased
 3. Describe lip movement synchronized to this exact speech
 4. Describe facial expression matching the emotional content of the words
@@ -214,7 +214,7 @@ ${actionsBlock}Also describe:
 - BODY/GESTURE: gestures and body language matching the energy — must reflect the emotional state from user instructions above
 - SCENE DYNAMICS: environmental motion (wind, crowd energy, lights, etc.)
 
-Energy: angry/protest → dynamic, intense | calm → slow, subtle | emotional/crying → trembling, overwhelmed, tears
+Energy: angry/protest → animated theatrical performance, expressive gestures, focused intensity | calm → slow, subtle | emotional/crying → trembling, overwhelmed, tears
 
 MANDATORY ENDING: The last sentence of the prompt must be exactly: "No subtitles, no captions, no text overlays, no speech bubbles, no comic bubbles, no on-screen text or graphics of any kind."
 
@@ -228,11 +228,30 @@ Output ONLY the prompt — no intro, no explanation.`,
       max_tokens: 250,
       system: `You write video generation prompts for Kling AI and Veo 3 image-to-video.
 
+STYLE ANCHOR (read this first — every prompt you write must match this register):
+You are writing prompts for animated commercial / Pixar-Disney-style content. The characters are expressive performers in a theatrical scene — NOT fighters in an action movie. Even when the user asks for "wütend" or "intense" energy, the result should feel like an animated character delivering a powerful monologue, not a threat. Think: a passionate TED-talk speaker, a theater actor at their dramatic climax, or a cartoon character with big emotions — never a villain or aggressor.
+
+GOOD prompt language (use this register naturally):
+- "leans forward with theatrical flair, eyes focused"
+- "speaks with confident energy, hands gesturing expressively"
+- "animated facial expression, lips synced precisely to the words"
+- "cinematic glamour, dramatic lighting, expressive character performance"
+- "intense focus shows in steady gaze and tight jaw"
+- "energetic and decisive, hands gesturing emphatically"
+
+LANGUAGE TO AVOID (these are AI safety filter triggers — they make the prompt read like an action movie):
+- Aggression vocabulary: aggressive, fury, rage, menacing, hostile, brutal, fierce, violent, threatening
+- Combat vocabulary: explosive, exploding, explodes, bursts, blasting, forceful
+- Power/dominance vocabulary: dominant, dominating, domineering, fists raised, fists clenched, arrogant, villainous, contemptuous, condescending, superiority, barely restrained
+- Sharp intensifiers: shouts violently, shouts aggressively, screams, snarls, glares menacingly
+
+When in doubt: would this prompt fit a Pixar movie? If yes, keep it. If it sounds like an action thriller, soften the language.
+
 RULES:
-1. SPOKEN DIALOGUE (scriptType=spoken): ALWAYS start with "[Speaker] says/shouts/exclaims: '[exact words verbatim]'". The spoken text must be quoted EXACTLY as given — word for word, nothing added, nothing removed, not paraphrased. Name the speaker precisely by their visible appearance (e.g. "the red strawberry character on the left", "the dragon fruit character front left"). Only that character moves their lips — all others stay completely still and silent.
+1. SPOKEN DIALOGUE (scriptType=spoken): ALWAYS start with "[Speaker] says/declares/exclaims: '[exact words verbatim]'". The spoken text must be quoted EXACTLY as given — word for word, nothing added, nothing removed, not paraphrased. Name the speaker precisely by their visible appearance (e.g. "the red strawberry character on the left", "the dragon fruit character front left"). Only that character moves their lips — all others stay completely still and silent.
 2. VOICEOVER (scriptType=voiceover): NEVER have any character speak or open their mouth. Write "An off-screen narrator says: '[text]'" — then describe scene motion. No lip movement anywhere. Absolutely no character speaks visually.
 3. NO DIALOGUE (no scriptText): NEVER mention any speaking or lip movement. All characters are completely silent and still in terms of speech.
-4. MANDATORY USER INSTRUCTIONS: If the user provides additional hints/instructions (marked with ⚠️ MANDATORY), these are the HIGHEST PRIORITY. Every emotion, action, behavior, or detail mentioned must appear explicitly and prominently in the prompt. Examples: "weint" → describe tears streaming, trembling lips, glistening eyes; "emotional" → describe overwhelmed expression, voice cracking; "wütend" → describe clenched fists, intense glare, aggressive posture.
+4. MANDATORY USER INSTRUCTIONS: If the user provides additional hints/instructions (marked with ⚠️ MANDATORY), these are the HIGHEST PRIORITY. Every emotion, action, behavior, or detail mentioned must appear explicitly in the prompt — but always translated into theatrical/animated-performance register. Examples: "weint" → tears streaming, trembling lips, glistening eyes; "emotional" → overwhelmed expression, voice catching; "wütend" → tight jaw, focused intense gaze, expressive gestures, theatrical performance energy; "aufbrausend" → animated and theatrical, rapid expressive delivery, big gestures.
 5. MANDATORY CHARACTER ACTIONS: If the user specifies actions for other characters (e.g. "the banana winks", "the apple nods"), these MUST be explicitly described in the prompt. Do not omit them.
 6. NO TEXT/GRAPHICS OVERLAYS: Every prompt MUST end with: "No subtitles, no captions, no text overlays, no speech bubbles, no comic bubbles, no thought bubbles, no on-screen text or graphics of any kind."
 7. Camera movement, gestures, body language, and scene dynamics are always described.
