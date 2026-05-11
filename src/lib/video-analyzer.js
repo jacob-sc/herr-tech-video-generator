@@ -1,3 +1,4 @@
+require('./load-env');
 const Anthropic = require('@anthropic-ai/sdk').default;
 const fs = require('fs');
 const path = require('path');

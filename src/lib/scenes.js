@@ -1,3 +1,5 @@
+require('./load-env');
+
 /**
  * Erkennt Szenen aus Whisper-Segmenten anhand von Pausen, Länge und Satzgrenzen.
  * Max 11 Sek pro Szene (Veo3-Limit). Zieldauern: 4, 6 oder 9 Sekunden.

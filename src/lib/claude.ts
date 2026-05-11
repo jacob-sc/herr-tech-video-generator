@@ -1,3 +1,4 @@
+require('./load-env');
 import Anthropic from '@anthropic-ai/sdk';
 import { TranscriptionResult } from './whisper';
 

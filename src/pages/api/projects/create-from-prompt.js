@@ -1,3 +1,4 @@
+require('../../../lib/load-env');
 import Anthropic from '@anthropic-ai/sdk';
 import { createProject, updateProject } from '../../../lib/project';
 import { requireAuth } from '../../../lib/api-auth';

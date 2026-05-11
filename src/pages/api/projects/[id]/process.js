@@ -1,3 +1,4 @@
+require('../../../../lib/load-env');
 import path from 'path';
 import { loadProject, updateProject, getProjectDir } from '../../../../lib/project';
 import { requireAuth, isAdmin } from '../../../../lib/api-auth';

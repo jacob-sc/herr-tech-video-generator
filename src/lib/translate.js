@@ -1,3 +1,4 @@
+require('./load-env');
 const Anthropic = require('@anthropic-ai/sdk');
 
 const getAnthropic = () => new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
